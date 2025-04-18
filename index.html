@@ -1,0 +1,97 @@
+RMI
+ICalculator.java
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface ICalculator extends Remote {
+    int add(int a, int b) throws RemoteException;
+    int subtract(int a, int b) throws RemoteException;
+    int multiply(int a, int b) throws RemoteException;
+    int divide(int a, int b) throws RemoteException;
+}
+
+
+Calculator.java
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class Calculator extends UnicastRemoteObject implements ICalculator {
+    protected Calculator() throws RemoteException {
+        super();
+    }
+
+    @Override
+    public int add(int a, int b) throws RemoteException {
+        return a + b;
+    }
+
+    @Override
+    public int subtract(int a, int b) throws RemoteException {
+        return a - b;
+    }
+
+    @Override
+    public int multiply(int a, int b) throws RemoteException {
+        return a * b;
+    }
+
+    @Override
+    public int divide(int a, int b) throws RemoteException {
+        if (b == 0) throw new ArithmeticException("Division by zero!");
+        return a / b;
+    }
+}
+
+
+
+CalculatorServer.java
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.Naming;
+
+public class CalculatorServer {
+    public static void main(String[] args) {
+        try {
+            Calculator calculator = new Calculator();
+
+            Registry registry = LocateRegistry.createRegistry(1099);
+
+            Naming.rebind("CalculatorService", calculator);
+
+            System.out.println("Calculator Server is ready.");
+        } catch (Exception e) {
+            System.err.println("Server exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+CalculatorClient.java
+import java.rmi.Naming;
+
+public class CalculatorClient {
+    public static void main(String[] args) {
+        try {
+            String serverHostname = args.length > 0 ? args[0] : "localhost";
+
+            ICalculator calculator = (ICalculator) Naming.lookup("rmi://" + serverHostname + "/CalculatorService");
+
+            System.out.println("Addition: " + calculator.add(10, 5));
+            System.out.println("Subtraction: " + calculator.subtract(10, 5));
+            System.out.println("Multiplication: " + calculator.multiply(10, 5));
+            System.out.println("Division: " + calculator.divide(10, 5));
+        } catch (Exception e) {
+            System.err.println("Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
