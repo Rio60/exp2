@@ -91,6 +91,20 @@ public class CalculatorClient {
     }
 }
 
+Steps:
+Server-Side Steps
+1)Compile the Java files on the server:
+javac ICalculator.java Calculator.java CalculatorServer.java
+2)Run the server (this will automatically handle RMI registry creation):
+java CalculatorServer
+
+Client-Side Steps
+1)Compile the Java files on the client:
+javac ICalculator.java CalculatorClient.java
+2)Run the client, specifying the server's hostname:
+java calculatorClient localhost
+
+
 
 RPC
 
