@@ -11,6 +11,7 @@ public interface ICalculator extends Remote {
     int divide(int a, int b) throws RemoteException;
 }
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 (Calculator.java)
 import java.rmi.RemoteException;
@@ -43,7 +44,7 @@ public class Calculator extends UnicastRemoteObject implements ICalculator {
     }
 }
 
-
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 (CalculatorServer.java)
 import java.rmi.registry.LocateRegistry;
@@ -68,7 +69,7 @@ public class CalculatorServer {
 }
 
 
-
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 CalculatorClient.java
 import java.rmi.Naming;
@@ -104,7 +105,7 @@ javac ICalculator.java CalculatorClient.java
 2)Run the client, specifying the server's hostname:
 java calculatorClient localhost
 
-
+-------------------------------------------------------------------------------------------------------------------------
 
 RPC
 
@@ -147,6 +148,8 @@ public class CalculatorRequest implements Serializable {
         this.operation = operation;
     }
 }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 (CalculatorServer.java)
 import java.io.*;
@@ -207,6 +210,8 @@ public class CalculatorServer {
     }
 }
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 (CalculatorClient.java)
 import java.io.*;
 import java.net.*;
@@ -243,6 +248,7 @@ public class CalculatorClient {
         }
     }
 }
+
 STEPS:
 Server-Side Steps
 1)Compile the Java files on the server:
