@@ -49,7 +49,6 @@ public class Calculator extends UnicastRemoteObject implements ICalculator {
 (CalculatorServer.java)
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.Naming;
 
 public class CalculatorServer {
     public static void main(String[] args) {
@@ -58,7 +57,7 @@ public class CalculatorServer {
 
             Registry registry = LocateRegistry.createRegistry(1099);
 
-            Naming.rebind("CalculatorService", calculator);
+            registry.rebind("CalculatorService", calculator); // USE registry here
 
             System.out.println("Calculator Server is ready.");
         } catch (Exception e) {
@@ -103,7 +102,7 @@ Client-Side Steps
 1)Compile the Java files on the client:
 javac ICalculator.java CalculatorClient.java
 2)Run the client, specifying the server's hostname:
-java calculatorClient localhost
+java CalculatorClient localhost
 
 -------------------------------------------------------------------------------------------------------------------------
 
